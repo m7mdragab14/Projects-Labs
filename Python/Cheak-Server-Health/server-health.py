@@ -24,13 +24,13 @@ def check_warnings(cpu, ram, disk):
     warnings = []
     
     if cpu > 80:
-        warnings.append(f"تحذير: CPU وصل {cpu}%")
+        warnings.append(f"Warning: CPU Reached {cpu}%")
     
     if ram > 80:
-        warnings.append(f"تحذير: RAM وصل {ram}%")
+        warnings.append(f"Warning: RAM Reached {ram}%")
     
     if disk > 90:
-        warnings.append(f"تحذير: Disk وصل {disk}%")
+        warnings.append(f"Warning: Disk Reached {disk}%")
     
     return warnings
 
@@ -42,4 +42,4 @@ if warnings:
     for w in warnings:
         print(w, flush=True)
 else:
-    print("كل حاجة تمام!", flush=True)
+    print("Everything is fine!", flush=True)
