@@ -1,105 +1,35 @@
-## Install Redmine using Docker
-1. Create Project Directory
-- sudo mkdir -p /opt/redmine
-- cd /opt/redmine
+## Step 03: Deploy Redmine with Docker
 
-2. Create docker-compose.yml
+In this step, Docker Compose is used to deploy both the **Redmine application** and a **PostgreSQL database**.
 
-Create a file named docker-compose.yml and add the following configuration:
-```yaml
-services:
-  postgres:
-    image: postgres:16
-    container_name: redmine_postgres
-    restart: always
-    environment:
-      POSTGRES_DB: redmine
-      POSTGRES_USER: redmine
-      POSTGRES_PASSWORD: StrongPassword123!
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    networks:
-      - redmine_network
+The `docker-compose.yml` file defines:
 
-  redmine:
-    image: redmine:5.1
-    container_name: redmine_app
-    restart: always
-    depends_on:
-      - postgres
-    environment:
-      REDMINE_DB_POSTGRES: postgres
-      REDMINE_DB_DATABASE: redmine
-      REDMINE_DB_USERNAME: redmine
-      REDMINE_DB_PASSWORD: StrongPassword123!
-      REDMINE_SECRET_KEY_BASE: supersecretkey123changethis
-    volumes:
-      - redmine_files:/usr/src/redmine/files
-      - redmine_plugins:/usr/src/redmine/plugins
-      - redmine_themes:/usr/src/redmine/public/themes
-    ports:
-      - "3000:3000"
-    networks:
-      - redmine_network
+* A PostgreSQL container to store Redmine data.
+* A Redmine application container.
+* Persistent Docker volumes to keep data even after restarting the containers.
+* A dedicated Docker bridge network for communication between services.
+* Port mapping to expose the Redmine web interface on port **3000**.
 
-volumes:
-  postgres_data:
-  redmine_files:
-  redmine_plugins:
-  redmine_themes:
+The complete configuration can be found in the `docker-compose.yml` file included in this repository.
 
-networks:
-  redmine_network:
-    driver: bridge
-```
-3. Start the Containers
+### Start the application
 
-Run the following command to start Redmine and PostgreSQL:
+Run the following command to create and start all containers in detached mode:
 
-- docker compose up -d
-
-Verify that the containers are running:
-
-- docker ps
-
-## Configure Nginx Reverse Proxy
-1. Install Nginx
-- sudo apt update
-- sudo apt install -y nginx
-2. Create Nginx Configuration
-- sudo nano /etc/nginx/sites-available/redmine
-
-# Paste the following configuration:
 ```bash
-server {
-    listen 80;
-    server_name 192.168.1.17;
-
-    client_max_body_size 50M;
-
-    location / {
-        proxy_pass http://127.0.0.1:3000;
-
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
-
-        proxy_read_timeout 300;
-        proxy_connect_timeout 300;
-    }
-}
+docker compose up -d
 ```
-3. Enable the Configuration
-- sudo ln -s /etc/nginx/sites-available/redmine /etc/nginx/sites-enabled/
-- sudo rm /etc/nginx/sites-enabled/default
-  
-4. Test the Configuration
-- sudo nginx -t
 
-Expected output:
-nginx: configuration file /etc/nginx/nginx.conf test is successful
+### Verify the deployment
 
-5. Restart Nginx
-- sudo systemctl enable nginx
-- sudo systemctl restart nginx
+You can verify that the containers are running successfully by executing:
+
+```bash
+docker ps
+```
+
+If everything is configured correctly, Redmine will be accessible on:
+
+```
+http://<SERVER_IP>:3000
+```
