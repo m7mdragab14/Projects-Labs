@@ -48,34 +48,34 @@ PostgreSQL (Docker)
 
 
 # Update and upgrade the system
-sudo apt update && sudo apt upgrade -y
+- sudo apt update && sudo apt upgrade -y
 
 
 
 # Firewall Configuration
-sudo ufw enable
-sudo ufw allow 22/tcp
-sudo ufw allow 80/tcp
-sudo ufw allow 443/tcp
+- sudo ufw enable
+- sudo ufw allow 22/tcp
+- sudo ufw allow 80/tcp
+- sudo ufw allow 443/tcp
 
 # Install Docker
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+- curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
 
-echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+- echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 
-sudo apt update
-sudo apt install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
+- sudo apt update
+- sudo apt install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
 
-sudo systemctl Status docker
+- sudo systemctl Status docker
 
-sudo usermod -aG docker $USER
+- sudo usermod -aG docker $USER
 
 ---
 
 ## Step-03: Install redmine on docker
 
-sudo mkdir -p /opt/redmine
-cd /opt/redmine
+- sudo mkdir -p /opt/redmine
+- cd /opt/redmine
 
 
 ### docker-compose.yml
@@ -129,4 +129,4 @@ networks:
 
 
 # Start redmine
-docker compose up -d
+- docker compose up -d
