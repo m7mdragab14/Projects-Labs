@@ -1,4 +1,4 @@
-## Step 03: Deploy Redmine with Docker
+## Step 01: Deploy Redmine with Docker
 
 In this step, Docker Compose is used to deploy both the **Redmine application** and a **PostgreSQL database**.
 
@@ -32,4 +32,25 @@ If everything is configured correctly, Redmine will be accessible on:
 
 ```
 http://<SERVER_IP>:3000
+```
+
+## Step 02: Configure Nginx
+
+The repository includes a preconfigured Nginx reverse proxy configuration file located at:
+
+```bash
+sudo apt install -y nginx
+sudo nano /etc/nginx/sites-available/redmine
+```
+### nano /etc/nginx/sites-available/redmine
+
+```text
+nginx/redmine.conf
+
+```bash
+sudo ln -s /etc/nginx/sites-available/redmine /etc/nginx/sites-enabled/
+sudo rm /etc/nginx/sites-enabled/default
+sudo nginx -t
+sudo systemctl enable nginx
+sudo systemctl restart nginx
 ```
