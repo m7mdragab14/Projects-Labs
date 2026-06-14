@@ -1,7 +1,8 @@
 ## Install Redmine using Docker
 1. Create Project Directory
-sudo mkdir -p /opt/redmine
-cd /opt/redmine
+- sudo mkdir -p /opt/redmine
+- cd /opt/redmine
+
 2. Create docker-compose.yml
 
 Create a file named docker-compose.yml and add the following configuration:
