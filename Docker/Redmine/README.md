@@ -56,20 +56,21 @@ networks:
 
 Run the following command to start Redmine and PostgreSQL:
 
-docker compose up -d
+- docker compose up -d
 
 Verify that the containers are running:
 
-docker ps
-🌐 Step 04: Configure Nginx Reverse Proxy
+- docker ps
+
+## Configure Nginx Reverse Proxy
 1. Install Nginx
-sudo apt update
-sudo apt install -y nginx
+- sudo apt update
+- sudo apt install -y nginx
 2. Create Nginx Configuration
-sudo nano /etc/nginx/sites-available/redmine
+- sudo nano /etc/nginx/sites-available/redmine
 
-Paste the following configuration:
-
+# Paste the following configuration:
+'''bash
 server {
     listen 80;
     server_name 192.168.1.17;
@@ -88,22 +89,17 @@ server {
         proxy_connect_timeout 300;
     }
 }
+'''
 3. Enable the Configuration
-sudo ln -s /etc/nginx/sites-available/redmine /etc/nginx/sites-enabled/
-sudo rm /etc/nginx/sites-enabled/default
+- sudo ln -s /etc/nginx/sites-available/redmine /etc/nginx/sites-enabled/
+- sudo rm /etc/nginx/sites-enabled/default
+  
 4. Test the Configuration
-sudo nginx -t
+- sudo nginx -t
 
 Expected output:
-
 nginx: configuration file /etc/nginx/nginx.conf test is successful
+
 5. Restart Nginx
-sudo systemctl enable nginx
-sudo systemctl restart nginx
-✅ Access Redmine
-
-Open your browser and navigate to:
-
-http://192.168.1.17
-
-If everything is configured correctly, the Redmine login page should appear.
+- sudo systemctl enable nginx
+- sudo systemctl restart nginx
