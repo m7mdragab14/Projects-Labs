@@ -42,9 +42,9 @@ The repository includes a preconfigured Nginx reverse proxy configuration file l
 sudo apt install -y nginx
 sudo nano /etc/nginx/sites-available/redmine
 ```
+
 ### nano /etc/nginx/sites-available/redmine
 
-```text
 nginx/redmine.conf
 
 ```bash
