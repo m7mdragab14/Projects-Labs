@@ -6,7 +6,7 @@
 2. Create docker-compose.yml
 
 Create a file named docker-compose.yml and add the following configuration:
-
+```yaml
 services:
   postgres:
     image: postgres:16
@@ -51,6 +51,7 @@ volumes:
 networks:
   redmine_network:
     driver: bridge
+```
 3. Start the Containers
 
 Run the following command to start Redmine and PostgreSQL:
