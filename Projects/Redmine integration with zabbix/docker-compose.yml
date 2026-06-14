@@ -1,0 +1,44 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: redmine_postgres
+    restart: always
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - redmine_network
+
+  redmine:
+    image: redmine:5.1
+    container_name: redmine_app
+    restart: always
+    depends_on:
+      - postgres
+    environment:
+      REDMINE_DB_POSTGRES: postgres
+      REDMINE_DB_DATABASE: ${POSTGRES_DB}
+      REDMINE_DB_USERNAME: ${POSTGRES_USER}
+      REDMINE_DB_PASSWORD: ${POSTGRES_PASSWORD}
+      REDMINE_SECRET_KEY_BASE: ${REDMINE_SECRET_KEY_BASE}
+    volumes:
+      - redmine_files:/usr/src/redmine/files
+      - redmine_plugins:/usr/src/redmine/plugins
+      - redmine_themes:/usr/src/redmine/public/themes
+    ports:
+      - "3000:3000"
+    networks:
+      - redmine_network
+
+volumes:
+  postgres_data:
+  redmine_files:
+  redmine_plugins:
+  redmine_themes:
+
+networks:
+  redmine_network:
+    driver: bridge
