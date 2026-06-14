@@ -1,0 +1,15 @@
+[Unit]
+Description=Zabbix Redmine Middleware
+After=network.target
+
+[Service]
+Type=simple
+User=YOUR_USERNAME
+WorkingDirectory=/opt/middleware
+EnvironmentFile=/opt/middleware/.env
+ExecStart=/usr/bin/python3 /opt/middleware/app.py
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
