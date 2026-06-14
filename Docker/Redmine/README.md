@@ -70,7 +70,7 @@ Verify that the containers are running:
 - sudo nano /etc/nginx/sites-available/redmine
 
 # Paste the following configuration:
-'''bash
+```bash
 server {
     listen 80;
     server_name 192.168.1.17;
@@ -89,7 +89,7 @@ server {
         proxy_connect_timeout 300;
     }
 }
-'''
+```
 3. Enable the Configuration
 - sudo ln -s /etc/nginx/sites-available/redmine /etc/nginx/sites-enabled/
 - sudo rm /etc/nginx/sites-enabled/default
