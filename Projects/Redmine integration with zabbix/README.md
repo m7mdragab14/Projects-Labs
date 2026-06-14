@@ -38,6 +38,7 @@ PostgreSQL (Docker)
 ```
 zabbix-redmine-integration/
 ├── README.md
+├── .env
 ├── docker-compose.yml
 ├── middleware/
 │   ├── app.py
