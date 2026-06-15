@@ -19,7 +19,14 @@ Zabbix Server
    v
 PostgreSQL
 ```
+## Repository Structure
 
+```
+zabbix-docker/
+├── .env
+├── docker-compose.yml
+└── README.md
+```
 ---
 
 ## Stack
@@ -80,7 +87,7 @@ cp .env.example .env
 Edit `.env` and replace the password:
 
 ```env
-POSTGRES_PASSWORD=YOUR_STRONG_PASSWORD
+POSTGRES_PASSWORD=pass@2026@
 ```
 
 Start the containers:
@@ -120,57 +127,6 @@ Username: Admin
 Password: zabbix
 ```
 
-Change the default password immediately after first login.
-
----
-
-## Step 4: Post-Install Configuration
-
-### Set Zabbix URL Macro
-
-This is required for alert notifications to include a working link back to Zabbix.
-
-```
-Administration → Macros
-```
-
-Add:
-
-```
-Macro: {$ZABBIX.URL}
-Value: http://YOUR_SERVER_IP
-```
-
-### Set Timezone
-
-```
-Administration → General → GUI
-```
-
-Set:
-
-```
-Default timezone: YOUR_TIMEZONE
-```
-
----
-
-## Monitoring
-
-```bash
-# View logs
-docker compose logs -f
-
-# Restart all containers
-docker compose restart
-
-# Stop all containers
-docker compose down
-
-# Start all containers
-docker compose up -d
-```
-
 ---
 
 ## Ports
@@ -182,21 +138,5 @@ docker compose up -d
 
 ---
 
-## Notes
 
-- Never commit `.env` to GitHub, it contains your database password
-- Port 10051 must be reachable by all Zabbix Agents on your network
-- Replace `YOUR_SERVER_IP` with your actual server IP or domain name
-- Replace `Africa/Cairo` in `docker-compose.yml` with your actual timezone if different
 
----
-
-## Repository Structure
-
-```
-zabbix-docker/
-├── .env.example
-├── .gitignore
-├── docker-compose.yml
-└── README.md
-```
