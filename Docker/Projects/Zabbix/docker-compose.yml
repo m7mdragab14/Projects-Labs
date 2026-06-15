@@ -1,0 +1,41 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: zabbix_postgres
+    restart: always
+    environment:
+      POSTGRES_DB: zabbix
+      POSTGRES_USER: zabbix
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - zabbix_network
+
+  zabbix-server:
+    image: zabbix/zabbix-server-pgsql:7.4-ubuntu-latest
+    container_name: zabbix_server
+    restart: always
+    depends_on:
+      - postgres
+    environment:
+      DB_SERVER_HOST: postgres
+      POSTGRES_DB: zabbix
+      POSTGRES_USER: zabbix
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "10051:10051"
+    networks:
+      - zabbix_network
+
+  zabbix-web:
+    image: zabbix/zabbix-web-nginx-pgsql:7.4-ubuntu-latest
+    container_name: zabbix_web
+    restart: always
+    depends_on:
+      - postgres
+      - zabbix-server
+    environment:
+      DB_SERVER_HOST: postgres
+      POSTGRES_DB: zabbix
+      POSTGRES_USER: zabbix
